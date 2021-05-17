@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Apr 2021 pada 09.39
--- Versi server: 10.1.38-MariaDB
--- Versi PHP: 7.3.3
+-- Generation Time: May 17, 2021 at 10:51 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang`
+-- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
@@ -41,26 +40,26 @@ CREATE TABLE `barang` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang_keluar`
+-- Table structure for table `barang_keluar`
 --
 
 CREATE TABLE `barang_keluar` (
   `id` int(11) NOT NULL,
   `barang_id` int(11) DEFAULT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
   `penerima` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang_masuk`
+-- Table structure for table `barang_masuk`
 --
 
 CREATE TABLE `barang_masuk` (
   `id` int(11) NOT NULL,
   `barang_id` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
   `nama_barang` varchar(50) NOT NULL,
   `keterangan` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -68,7 +67,7 @@ CREATE TABLE `barang_masuk` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -81,7 +80,7 @@ CREATE TABLE `customer` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_barang`
+-- Table structure for table `detail_barang`
 --
 
 CREATE TABLE `detail_barang` (
@@ -94,7 +93,7 @@ CREATE TABLE `detail_barang` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_transaksi`
+-- Table structure for table `detail_transaksi`
 --
 
 CREATE TABLE `detail_transaksi` (
@@ -107,7 +106,7 @@ CREATE TABLE `detail_transaksi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori`
+-- Table structure for table `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -118,13 +117,12 @@ CREATE TABLE `kategori` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawai`
+-- Table structure for table `pegawai`
 --
 
 CREATE TABLE `pegawai` (
   `id_pegawai` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `nama_pegawai` varchar(100) NOT NULL,
+  `nama` varchar(100) NOT NULL,
   `foto` varchar(150) NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `telp` varchar(20) NOT NULL,
@@ -133,17 +131,17 @@ CREATE TABLE `pegawai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pegawai`
+-- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`id_pegawai`, `id_user`, `nama_pegawai`, `foto`, `alamat`, `telp`, `username`, `password`) VALUES
-(1, 3, 'udin', '', 'Cileungsi', '081346625791', 'udinpenyok', 'udin12'),
-(3, 5, 'Suzuki', '', 'Jl. Raya Kalimalang Bekasi', '085224934861', 'suzuki', '12345');
+INSERT INTO `pegawai` (`id_pegawai`, `nama`, `foto`, `alamat`, `telp`, `username`, `password`) VALUES
+(1, 'udin', '', 'Cileungsi', '081346625791', 'udinpenyok', 'udin12'),
+(3, 'Suzuki', '', 'Jl. Raya Kalimalang Bekasi', '085224934861', 'suzuki', '12345');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `stok`
+-- Table structure for table `stok`
 --
 
 CREATE TABLE `stok` (
@@ -157,7 +155,7 @@ CREATE TABLE `stok` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `suppliers`
+-- Table structure for table `suppliers`
 --
 
 CREATE TABLE `suppliers` (
@@ -169,7 +167,7 @@ CREATE TABLE `suppliers` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -177,13 +175,13 @@ CREATE TABLE `transaksi` (
   `customer_id` int(11) NOT NULL,
   `nama_customer` varchar(50) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `total` int(50) DEFAULT '0'
+  `total` int(50) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -195,11 +193,11 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `level`, `nama`) VALUES
-(1, 'admin1', 'admin', 'admin', 'Adminitrasi'),
+(1, 'admin', 'admin', 'admin', 'Adminitrasi'),
 (2, 'elinmrl', '220799', 'admin', 'Elin M'),
 (3, 'udinpenyok', 'udin12', '', 'udin');
 
@@ -208,142 +206,141 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `level`, `nama`) VALUES
 --
 
 --
--- Indeks untuk tabel `barang_keluar`
+-- Indexes for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `barang_masuk`
+-- Indexes for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `detail_barang`
+-- Indexes for table `detail_barang`
 --
 ALTER TABLE `detail_barang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `detail_transaksi`
+-- Indexes for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `kategori`
+-- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pegawai`
+-- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  ADD PRIMARY KEY (`id_pegawai`),
-  ADD KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id_pegawai`);
 
 --
--- Indeks untuk tabel `stok`
+-- Indexes for table `stok`
 --
 ALTER TABLE `stok`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `suppliers`
+-- Indexes for table `suppliers`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `barang_keluar`
+-- AUTO_INCREMENT for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `barang_masuk`
+-- AUTO_INCREMENT for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_barang`
+-- AUTO_INCREMENT for table `detail_barang`
 --
 ALTER TABLE `detail_barang`
   MODIFY `id` int(1) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `kategori`
+-- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawai`
+-- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
   MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `stok`
+-- AUTO_INCREMENT for table `stok`
 --
 ALTER TABLE `stok`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `suppliers`
+-- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi`
+-- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `pegawai`
+-- Constraints for table `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD CONSTRAINT `pegawai_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `user` (`id_user`);
