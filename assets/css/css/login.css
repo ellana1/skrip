@@ -1,0 +1,218 @@
+body{
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	min-height: 100vh;
+	font-family: sans-serif;
+	background-color: #9e58e0;
+	/*overflow-y: hidden;*/
+}
+.bawaan{
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	border-radius: 20px;
+	justify-content: space-between;
+	width: 900px;
+	height: 600px;
+	background: #fff;
+	margin: 20px;
+}
+.bawaan .imgBX{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+	width: 50%;
+	height: 100%;
+	background: #62388a;
+
+}
+.bawaan .imgBX:before{
+	content: "Remaja Bhakti 1983";
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	color: #000;
+	font-size: 2em;
+	font-weight: 600;
+	opacity: 0.1;
+
+}
+.bawaan .imgBX img{
+	position: relative;
+	width: 700px;
+	transform: rotate(-30deg);
+	top: 30px;
+	left: 30px;
+	transition: 0.5s;
+}
+.bawaan .detil{
+	display: flex;
+	justify-content: center;
+	width: 50%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 40px;
+}
+.bawaan .detil h2{
+	margin: 0;
+	padding: 0;
+	font-size: 2.5em;
+	line-height: 0.8em;
+	color: #62388a;
+	text-transform: uppercase;
+
+}
+.bawaan .detil h2 span{
+	font-size: 0.4em;
+	text-transform: capitalize;
+	letter-spacing: 2px;
+	color: #999;
+}
+.bawaan .detil p{
+	 max-width: 95%;
+	 /*margin-left: 15%;*/
+	 color: #333;
+	 font-size: 15px;
+	 text-align: justify;
+}
+.bawaan .detil div.form{
+	position: relative;
+	margin: 50px 0 30px 0;
+	width: 300px;
+}
+.bawaan .detil div.form .form-group{
+	margin: 40px 0 40px;
+
+	width: 100%;
+
+}
+.bawaan .detil div.form .form-group label{
+	font-size: 16px;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+}
+.bawaan .detil div.form .form-group input{
+	margin: 0;
+	padding: 10px;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	font-size: 16px;
+}
+.bawaan .detil div.form .inputbox{
+	position: relative;
+}
+.bawaan .detil div.form .inputbox input{
+	width: 100%;
+	padding: 10px 0;
+	font-size: 1.5rem;
+	color: #000;
+	margin-bottom: 30px;
+	border: none;
+	border-bottom: 1.5px solid #666;
+	outline: none;
+	background: transparent;
+	transition: 0.5s;
+	/*border-radius: 5px;*/
+}
+.bawaan .detil div.form .inputbox label{
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 2rem 0;
+	font-size: 1rem;
+	color: #000;
+	pointer-events: none;
+	transition: .5s;
+}
+.bawaan .detil div.form .inputbox input:focus,
+.bawaan .detil div.form .inputbox input:valid{
+	top: -20px;
+	left: -20px;
+	/*color: #62388a;*/
+	border-bottom: 1.5px solid #9e58e0;
+	transition: 1s;
+}
+.bawaan .detil div.form .inputbox input:hover{
+	color: #62388a;
+	border-bottom: 1.5px solid #9e58e0;
+	transition: 1s;
+}
+.input-full{
+	text-align: center;
+	/*align-items: center;*/
+	/*align-self: center;*/
+	/*align-content: center;*/
+}
+.bawaan .detil h3{
+	margin: 0;
+	padding:0;
+	font-size: 1.5em;
+	margin-top: 7px;
+	color: #a2a2a2;
+	float: right;
+	margin-right: 5%;
+	margin-bottom: 10px;
+	text-shadow: 2px;
+}
+.bawaan .detil button{
+	background: #62388a;
+	color: #fff;
+	border: none;
+	box-shadow: none;
+	outline: none;
+	/*margin-left: 15%;*/
+	padding: 10px 15px;
+	font-size: 1em;
+	border-radius: 20px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	font-weight: 200;
+	float: left;
+	cursor: pointer;
+}
+.bawaan .detil button:hover{
+	background: #9e58e0;
+	color: white;
+}
+@media(max-width: 850px){
+	.bawaan{
+		height: auto;
+	}
+	.bawaan .imgBX{
+		padding: 40px;
+		box-sizing: border-box;
+		width: 100% ! important;
+		height: auto;
+		text-align: center;
+		overflow: hidden;
+	}
+	.bawaan .imgBX img{
+		left: initial;
+		max-width: 100%;
+		transform: rotate(0deg);
+		transition: 1s;
+	}
+	.detil{
+		width: 100% !important;
+		height: auto; 
+		padding: 20px;
+
+
+	}
+	.bawaan .detil p{
+		max-width: 100%;
+		margin-left: 0;
+		/*color: #333;
+		font-size: 15px;*/
+	}
+	.bawaan .detil button{
+		margin-left: 0;
+	}
+
+}
