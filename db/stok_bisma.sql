@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2021 at 12:38 PM
+-- Generation Time: May 22, 2021 at 01:03 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -69,7 +69,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`barang_id`, `kategori_id`, `supplier_id`, `kode_barang`, `nama_barang`, `stok_id`, `harga`) VALUES
-(1, 2, '', '2005', 'AC 230gr', 500, 200000);
+(1, 2, '', '2005', 'AC 230gr', 500, 200000),
+(2, 2, '', '210521', 'Kalender', 1000, 12000);
 
 -- --------------------------------------------------------
 
@@ -339,7 +340,7 @@ ALTER TABLE `bahan`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `barang_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `barang_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `barang_keluar`
