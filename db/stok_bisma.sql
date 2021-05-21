@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2021 at 10:51 PM
+-- Generation Time: May 22, 2021 at 12:38 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -24,18 +24,52 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bahan`
+--
+
+CREATE TABLE `bahan` (
+  `id` int(11) NOT NULL,
+  `nama_bahan` varchar(20) NOT NULL,
+  `satuan` varchar(11) NOT NULL,
+  `harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bahan`
+--
+
+INSERT INTO `bahan` (`id`, `nama_bahan`, `satuan`, `harga`) VALUES
+(1, 'HVS', 'lembar', 2000),
+(2, 'AP', 'lembar', 3000),
+(3, 'AC 210 gr', 'lembar', 4000),
+(4, 'Chromo', 'lembar', 4000),
+(5, 'AC 230 gr', 'lembar', 4000),
+(6, 'Vinyl', 'lembar', 9000),
+(7, 'kertas Tik', 'lembar', 4500),
+(8, 'vinyl silver', 'lembar', 14000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
-  `id` int(5) NOT NULL,
+  `barang_id` int(5) NOT NULL,
   `kategori_id` int(5) DEFAULT NULL,
-  `supplier_id` int(11) DEFAULT NULL,
+  `supplier_id` varchar(20) DEFAULT NULL,
   `kode_barang` varchar(50) DEFAULT NULL,
   `nama_barang` varchar(100) DEFAULT NULL,
   `stok_id` int(11) DEFAULT NULL,
   `harga` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`barang_id`, `kategori_id`, `supplier_id`, `kode_barang`, `nama_barang`, `stok_id`, `harga`) VALUES
+(1, 2, '', '2005', 'AC 230gr', 500, 200000);
 
 -- --------------------------------------------------------
 
@@ -62,19 +96,6 @@ CREATE TABLE `barang_masuk` (
   `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
   `nama_barang` varchar(50) NOT NULL,
   `keterangan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customer`
---
-
-CREATE TABLE `customer` (
-  `id` int(11) NOT NULL,
-  `nama_customer` varchar(40) NOT NULL,
-  `tel` varchar(20) NOT NULL,
-  `alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -114,6 +135,14 @@ CREATE TABLE `kategori` (
   `nama_kategori` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id`, `nama_kategori`) VALUES
+(6, 'digital printing'),
+(7, 'Offset');
+
 -- --------------------------------------------------------
 
 --
@@ -135,8 +164,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nama`, `foto`, `alamat`, `telp`, `username`, `password`) VALUES
-(1, 'udin', '', 'Cileungsi', '081346625791', 'udinpenyok', 'udin12'),
-(3, 'Suzuki', '', 'Jl. Raya Kalimalang Bekasi', '085224934861', 'suzuki', '12345');
+(1, 'udin', '', 'Cileungsi', '081346625791', 'udinpenyok', 'udin12');
 
 -- --------------------------------------------------------
 
@@ -152,6 +180,14 @@ CREATE TABLE `stok` (
   `kategori` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `stok`
+--
+
+INSERT INTO `stok` (`id`, `nama_barang`, `stok`, `harga`, `kategori`) VALUES
+(1, 'AC 210 gr', 124, 4000, ''),
+(2, 'AC 230gr', 500, 4000, '');
+
 -- --------------------------------------------------------
 
 --
@@ -161,8 +197,20 @@ CREATE TABLE `stok` (
 CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL,
   `nama_perusahaan` varchar(150) NOT NULL,
-  `alamat` varchar(150) NOT NULL
+  `alamat` varchar(150) NOT NULL,
+  `produk` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `nama_perusahaan`, `alamat`, `produk`) VALUES
+(1, 'Toko JLS', 'Senen, Jakarta Pusat', 'tinta dan kertas'),
+(2, 'Toko Joy', 'Pasar Senen, Jakarta Pusat', 'kertas'),
+(3, 'Timur Jaya', 'Kramat jati, Jakarta timur', 'kertas'),
+(4, 'Master Grafika', 'Pasar senen, Jakpus', 'tinta'),
+(5, 'Quantac', '', 'Mesin');
 
 -- --------------------------------------------------------
 
@@ -172,9 +220,9 @@ CREATE TABLE `suppliers` (
 
 CREATE TABLE `transaksi` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
   `nama_customer` varchar(50) NOT NULL,
   `tanggal` date DEFAULT NULL,
+  `harga` int(100) NOT NULL,
   `total` int(50) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -206,6 +254,18 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `level`, `nama`) VALUES
 --
 
 --
+-- Indexes for table `bahan`
+--
+ALTER TABLE `bahan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `barang`
+--
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`barang_id`);
+
+--
 -- Indexes for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
@@ -215,12 +275,6 @@ ALTER TABLE `barang_keluar`
 -- Indexes for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -276,6 +330,18 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `bahan`
+--
+ALTER TABLE `bahan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `barang`
+--
+ALTER TABLE `barang`
+  MODIFY `barang_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
@@ -288,12 +354,6 @@ ALTER TABLE `barang_masuk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `detail_barang`
 --
 ALTER TABLE `detail_barang`
@@ -303,7 +363,7 @@ ALTER TABLE `detail_barang`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -315,13 +375,13 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT for table `stok`
 --
 ALTER TABLE `stok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
