@@ -28,6 +28,17 @@
                                     <label>Kode barang</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan kode barang" name="kode_barang" required>
                                 </div>
+                                <div class="col-md-12 col-xs-12 form-group">
+                                    <label>Kode Supplier</label>
+                                    <select name="kategori_id" class="custom-select">
+                                        <option>--Pilih Supplier--</option>
+                                        <?php $supplier_id = mysqli_query($conn, "SELECT * from suppliers"); ?>
+                                        <?php foreach ($supplier_id as $row) : ?>
+                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['nama_perusahaan'] ?>
+                                            </option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
 
                                 <div class="col-md-12 col-xs-12 form-group">
                                     <label>Nama Barang</label>
@@ -55,13 +66,14 @@
                     if (isset($_POST['simpan'])) {
                         $id = $_POST['id'];
                         $kategori_id = $_POST['kategori_id'];
+                        $supplier_id = $_POST['supplier_id'];
                         $kode_barang  = $_POST['kode_barang'];
                         $nama_barang  = $_POST['nama_barang'];
                         $stok_id = $_POST['stok'];
                         $harga = $_POST['harga'];
 
 
-                        $sql = "INSERT into barang values(null, '$kategori_id', '$kode_barang', '$nama_barang', '$stok_id', '$harga')";
+                        $sql = "INSERT into barang values(null, '$kategori_id', '$supplier_id','$kode_barang', '$nama_barang', '$stok_id', '$harga')";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=produk'</script>";
