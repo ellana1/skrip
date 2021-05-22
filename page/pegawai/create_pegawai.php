@@ -56,15 +56,15 @@
             $foto_pegawai = $_FILES["foto"]["name"];
             $gmbr_pegawai = $_FILES["foto"]["tmp_name"];
             move_uploaded_file($gmbr_pegawai, "assets/img/pegawai/$foto_pegawai");
-          $sql= "INSERT INTO pegawai(nama,alamat,telp,username,password,foto) values('$nama','$alamat','$telp','$username','$password','$foto_pegawai')";
-            $conn->query($sql) or die(mysqli_error($conn));
-
+           $sql= "INSERT INTO pegawai(nama,alamat,telp,username,password,foto) values('$nama','$alamat','$telp','$username','$password','$foto_pegawai')";
+           $query = mysqli_query($conn, $sql);
+            if ($query) {
+              echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=pegawai'</script>";
+            } else {
+              echo "Error : " . mysqli_error($conn);
+            }
+          }
           ?>
-            <script type="text/javascript">
-              alert("Sukses. Data berhasil disimpan");
-              window.location.href = '?halaman=pegawai';
-            </script>
-          <?php }; ?>
         </div>
 
 
