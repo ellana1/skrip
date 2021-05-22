@@ -30,9 +30,16 @@
                                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Harga" name="harga" required value="<?= $data['harga'] ?>">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Kategori</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Kategori" name="kategori" required value="<?= $data['kategori'] ?>">
-                            </div>
+                            <label for="exampleInputEmail1">Kategori</label>
+                            <select name="kategori_id" class="custom-select">
+                                <option>--Pilih Kategori--</option>
+                                <?php $kategori = mysqli_query($conn, "SELECT * from kategori"); ?>
+                                <?php foreach ($kategori as $row) : ?>
+                                    <option value="<?php echo $row['nama_kategori'] ?>"><?php echo $row['nama_kategori'] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

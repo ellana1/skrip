@@ -25,6 +25,10 @@
                                 <label for="exampleInputEmail1">Satuan</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Nama Satuan" name="satuan" required value="<?= $data['satuan'] ?>">
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Harga</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Nama harga" name="harga" required value="<?= $data['harga'] ?>">
+                            </div>
 
 
                         </div>
@@ -37,8 +41,9 @@
                         $id = $_POST['id'];
                         $nama_bahan = $_POST['nama_bahan'];
                         $satuan = $_POST['satuan'];
+                        $harga = $_POST['harga'];
 
-                        $sql = "UPDATE bahan set nama_bahan='$nama_bahan', satuan='$satuan' where id='$id'";
+                        $sql = "UPDATE bahan set nama_bahan='$nama_bahan', satuan='$satuan', harga='$harga' where id='$id'";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo "<script>alert('Data berhasil diubah!');window.location.href='?halaman=bahan'</script>";

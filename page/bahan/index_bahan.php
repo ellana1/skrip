@@ -23,6 +23,7 @@
                                                             <th>No</th>
                                                             <th>Bahan</th>
                                                             <th>Satuan</th>
+                                                            <th>Harga</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -38,6 +39,7 @@
                                                                 <td><?php echo $no++; ?></td>
                                                                 <td><?php echo $row['nama_bahan']; ?></td>
                                                                 <td><?php echo $row['satuan']; ?></td>
+                                                                <td><?php echo $row['harga']; ?></td>
                                                                 <td>
                                                                     <span class="float-right">
 

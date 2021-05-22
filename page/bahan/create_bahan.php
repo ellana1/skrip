@@ -20,6 +20,10 @@
                                 <label for="exampleInputEmail1">Satuan</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan satuan" name="satuan" required>
                             </div>
+                             <div class="form-group">
+                                <label for="exampleInputEmail1">Harga</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan harga" name="harga" required>
+                            </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -31,8 +35,9 @@
                         $id = $_POST['id'];
                         $nama_bahan  = $_POST['nama_bahan'];
                         $satuan  = $_POST['satuan'];
+                        $harga =$_POST['harga'];
 
-                        $sql = "INSERT into bahan values(null, '$nama_bahan', '$satuan')";
+                        $sql = "INSERT into bahan values(null, '$nama_bahan', '$satuan', '$harga')";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=bahan'</script>";
