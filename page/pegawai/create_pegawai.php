@@ -54,8 +54,8 @@
             $level    = 'pegawai';
 
             $foto_pegawai = $_FILES["foto"]["name"];
-            $gmbr_pegawai = $_FILES["foto"]["tmp_name"];
-            move_uploaded_file($gmbr_pegawai, "assets/img/pegawai/$foto_pegawai");
+            $foto_pegawai = $_FILES["foto"]["tmp_name"];
+            move_uploaded_file($foro_pegawai, "assets/img/pegawai/$foto_pegawai");
            $sql= "INSERT INTO pegawai(nama,alamat,telp,username,password,foto) values('$nama','$alamat','$telp','$username','$password','$foto_pegawai')";
            $query = mysqli_query($conn, $sql);
             if ($query) {
