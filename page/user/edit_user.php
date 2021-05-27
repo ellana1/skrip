@@ -28,6 +28,10 @@
                                 <label for="exampleInputEmail1">Password</label>
                                 <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Masukan Password" name="password" required value="<?= $data['password'] ?>">
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">level</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan level" name="level" required value="<?= $data['level'] ?>">
+                            </div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
@@ -37,10 +41,11 @@
                     if (isset($_POST['simpan'])) {
                         $id_user = $_GET['id'];
                         $nama = $_POST['nama'];
-                        $username = $_POST['username'];
+                        $Username = $_POST['username'];
                         $password = $_POST['password'];
+                        $level = $_POST['level'];
 
-                        $sql = "update user set nama='$nama', username='$username', password='$password' where id_user='$id'";
+                        $sql = "update user set nama='$nama', level='$level', password='$password' where id_user='$id'";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo "<script>alert('Data berhasil diubah!');window.location.href='?halaman=user'</script>";

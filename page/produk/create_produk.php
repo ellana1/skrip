@@ -34,7 +34,7 @@
                                         <option>--Pilih Supplier--</option>
                                         <?php $supplier_id = mysqli_query($conn, "SELECT * from suppliers"); ?>
                                         <?php foreach ($supplier_id as $row) : ?>
-                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['nama_perusahaan'] ?>
+                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['supplier_id'] ?>
                                             </option>
                                         <?php endforeach ?>
                                     </select>

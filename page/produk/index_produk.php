@@ -15,9 +15,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>kode Supplier</th>
-                                    <th>Nama Barang</th>
                                     <th>Kategori</th>
+                                    <th>Kode Supplier</th>
+                                    <th>Nama Barang</th>
                                     <th>Stok</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
@@ -25,28 +25,31 @@
                             </thead>
                             <tbody>
                                 <?php
+
                                 $no = 1;
                                 $sql = "select * from barang";
                                 $query = mysqli_query($conn, $sql);
-                                while ($row = mysqli_fetch_assoc($query)): ?>
-                                    <?php $query = mysqli_query($conn, "SELECT * from barang order by id desc");
-                                    $no = 1; ?>
-                                    <?php
-                                    foreach ($query as $row) :
-                                        $kategori = mysqli_fetch_array(mysqli_query($conn, "SELECT * from kategori where id = '$row[kategori_id]'"));
-                                    ?>
+                                foreach ($query as $row ):
+                                    $kategori_id=mysqli_fetch_array(mysqli_query($conn,"SELECT * from kategori where id = '$row[kategori_id]'")); 
+                                
+                                    $supplier_id=mysqli_fetch_array(mysqli_query($conn,"SELECT * from suppliers where id = '$row[supplier_id]'")); ?>
+                                
+                                    
                                         <tr>
-                                            <td><?= $no ?></td>
-                                             <td><?= $row['supplier_id'] ?></td>
+                                            <td><?= $no++; ?></td>
+                                            <td><?php echo $kategori_id['nama_kategori']; ?></td>
+                                            <td><?php echo $supplier_id['nama_perusahaan']; ?></td>
+                                            
                                             <td><?= $row['nama_barang'] ?>
                                                 <br>
                                                 <small class="text-muted">
                                                     <?php echo $row['kode_barang']; ?>
                                                 </small>
                                             </td>
-                                            <td><?php echo $kategori['nama_kategori']; ?></td>
                                             <td><?= $row['stok_id'] ?></td>
                                             <td><?php echo "Rp. " . number_format($row['harga']); ?></td>
+                                            
+
 
                                             <td>
                                                 <a href="?halaman=produk&aksi=edit&id=<?= $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
@@ -54,9 +57,9 @@
                                             </td>
                                         </tr>
                                 <?php
-                                        $no++;
-                                    endforeach;
-                                endwhile ?>
+                                        // $no++;
+                                    endforeach;?>
+                           <!--  endwhile;  -->
                             </tbody>
                         </table>
 

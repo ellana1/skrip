@@ -23,6 +23,10 @@
                 <label for="exampleInputEmail1">Password</label>
                 <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Masukan Password" name="password" required>
               </div>
+              <div class="form-group">
+              <label for="exampleInputEmail1">level</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan level" name="level" required>
+              </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -35,7 +39,7 @@
             $nama     = $_POST['nama'];
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $level    = 'admin';
+            $level    = $_POST['level'];;
 
             $sql = "INSERT into user values(null, '$username', '$password', '$level', '$nama')";
             $query = mysqli_query($conn, $sql);
@@ -56,4 +60,3 @@
     </div>
   </div>
 </div>
-<!-- /.row -->

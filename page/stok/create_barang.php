@@ -1,3 +1,21 @@
+ <?php
+                    if (isset($_POST['simpan'])) {
+                        $id = $_POST['id'];
+                        $nama_barang  = $_POST['nama_barang'];
+                        $stok = $_POST['stok'];
+                        $harga = $_POST['harga'];
+                        $kategori = $_POST['kategori'];
+
+                        $sql = "INSERT into stok values(null,'$id', '$nama_barang', '$stok', '$harga', '$kategori')";
+                        
+                        $query = mysqli_query($conn, $sql);
+                        if ($query) {
+                            echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=stok'</script>";
+                        } else {
+                            echo "Error : " . mysqli_error($conn);
+                        }
+                    }
+                    ?>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Tambah Data Barang</h1>
     <div class="card shadow mb-4">
@@ -25,31 +43,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Kategori</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Kategori" name="kategori" required>
-                            </div>
+                            <select name="kategori" class="custom-select">
+                                <option>--Pilih Kategori--</option>
+                                <?php $kategori = mysqli_query($conn, "SELECT * from kategori"); ?>
+                                <?php foreach ($kategori as $row) : ?>
+                                    <option value="<?php echo $row['nama_kategori'] ?>"><?php echo $row['nama_kategori'] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                         </div>
                     </form>
-                    <?php
-                    if (isset($_POST['simpan'])) {
-                        $id = $_POST['id'];
-                        $nama_barang  = $_POST['nama_barang'];
-                        $stok = $_POST['stok'];
-                        $harga = $_POST['harga'];
-                        $kategori    = $_POST['kategori'];
-
-                        $sql = "insert into stok values(null, '$nama_barang', '$stok', '$harga', '$kategori')";
-                        $query = mysqli_query($conn, $sql);
-                        if ($query) {
-                            echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=stok'</script>";
-                        } else {
-                            echo "Error : " . mysqli_error($conn);
-                        }
-                    }
-                    ?>
+                   
                 </div>
                 <!-- /.box -->
 

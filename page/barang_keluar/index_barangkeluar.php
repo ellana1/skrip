@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <h1 class="h3 mb-2 text-gray-800">Data Barang Masuk </h1>
+    <h1 class="h3 mb-2 text-gray-800">Data Barang Keluar </h1>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title"><span class="pull-right"><a href="?halaman=barang_keluar&aksi=tambah" class="btn btn-success">+ Barang Keluar</a></span></h3>

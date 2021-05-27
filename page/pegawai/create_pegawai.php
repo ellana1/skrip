@@ -54,10 +54,11 @@
             $level    = 'pegawai';
 
             $foto_pegawai = $_FILES["foto"]["name"];
-            $foto_pegawai = $_FILES["foto"]["tmp_name"];
-            move_uploaded_file($foro_pegawai, "assets/img/pegawai/$foto_pegawai");
-           $sql= "INSERT INTO pegawai(nama,alamat,telp,username,password,foto) values('$nama','$alamat','$telp','$username','$password','$foto_pegawai')";
-           $query = mysqli_query($conn, $sql);
+            $gambar_pegawai = $_FILES["foto"]["tmp_name"];
+            move_uploaded_file($foto_pegawai, "assets/img/pegawai/$foto_pegawai");
+            $sql= "INSERT INTO pegawai(nama,foto,alamat,telp,username,password) values('$nama','$foto_pegawai','$alamat','$telp','$username','$password')";
+            $query = mysqli_query($conn, $sql);
+            
             if ($query) {
               echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=pegawai'</script>";
             } else {
@@ -66,10 +67,9 @@
           }
           ?>
         </div>
-
-
+            
+      </div>
+      </div>
     </div>
     <!--/.col (left) -->
   </div>
-</div>
-</div>

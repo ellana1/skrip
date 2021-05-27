@@ -19,7 +19,7 @@
                                 <option>--Pilih Kategori--</option>
                                 <?php $kategori = mysqli_query($conn, "SELECT * from kategori"); ?>
                                 <?php foreach ($kategori as $row) : ?>
-                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['nama_kategori'] ?>
+                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['kategori_id'] ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
@@ -27,6 +27,17 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Kode Barang</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Nama barang" name="kode_barang" required value="<?= $data['kode_barang'] ?>">
+                        </div>
+                         <div class="form-group">
+                           <label for="exampleInputEmail1">Kode Supplier</label>
+                            <select name="supplier_id" class="custom-select">
+                                <option>--Pilih supplier--</option>
+                                <?php $supplier_id = mysqli_query($conn, "SELECT * from suppliers"); ?>
+                                <?php foreach ($supplier_id as $row) : ?>
+                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['supplier_id'] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama</label>
@@ -49,12 +60,13 @@
                 if (isset($_POST['simpan'])) {
                     $id = $_POST['id'];
                     $kategori_id = $_POST['kategori_id'];
-                    $kode_barang  = $_POST['nama_barang'];
-                    $nama_barang  = $_POST['kode_barang'];
+                    $supplier_id = $_POST['supplier_id'];
+                    $kode_barang  = $_POST['kode_barang'];
+                    $nama_barang  = $_POST['nama_barang'];
                     $stok_id = $_POST['stok_id'];
                     $harga = $_POST['harga'];
 
-                    $sql = "UPDATE barang set kategori_id='$kategori_id', kode_barang ='$kode_barang', nama_barang='$nama_barang', stok_id='$stok_id', harga='$harga' where id='$id'";
+                    $sql = "UPDATE barang set kategori_id='$kategori_id', supplier_id=$supplier_id, kode_barang ='$kode_barang', nama_barang='$nama_barang', stok_id='$stok_id', harga='$harga' where id='$id'";
                     $query = mysqli_query($conn, $sql);
                     if ($query) {
                         echo "<script>alert('Data berhasil diubah!');window.location.href='?halaman=produk'</script>";

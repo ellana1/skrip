@@ -3,11 +3,15 @@
     <h1 class="h3 mb-2 text-gray-800">Data Stok Barang </h1>
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"><span class="pull-right"><a href="?halaman=stok&aksi=tambah" class="btn btn-success"><i class="fa fa-cubes"></i> Tambah Data Barang</a></span></h3>
-
+            <h3 class="box-title"><span class="pull-right"><a href="?halaman=stok&aksi=tambah" class="btn btn-success"><i class="fa fa-cubes"></i> + Data Barang</a></span></h3>
+        
+       
+           <div class="box">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Tabel Stok Barang</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Stok Bisma Print</h6>
+                     <span class="float-right">
+                    <a href="?halaman=stok&aksi=print" class="btn btn-success"><i class="fa fa-print"></i> Print </a></span>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

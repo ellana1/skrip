@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Edit Data Stok Barang</h1>
+    <h1 class="h3 mb-2 text-gray-800">Edit Stok Barang</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Update Stok Barang</h6>
@@ -10,7 +10,7 @@
                     <div class="box-header with-border">
                         <?php
                         $id = @$_GET['id'];
-                        $sql = mysqli_query($conn, "SELECT *FROM stok where id = '$_GET[id]'") or die(mysqli_error());
+                        $sql = mysqli_query($conn, "SELECT * FROM stok where id = '$_GET[id]'") or die(mysqli_error());
                         $data = mysqli_fetch_array($sql);
                         ?>
                     </div>
@@ -31,11 +31,11 @@
                             </div>
                             <div class="form-group">
                             <label for="exampleInputEmail1">Kategori</label>
-                            <select name="kategori_id" class="custom-select">
+                            <select name="kategori" class="custom-select">
                                 <option>--Pilih Kategori--</option>
                                 <?php $kategori = mysqli_query($conn, "SELECT * from kategori"); ?>
                                 <?php foreach ($kategori as $row) : ?>
-                                    <option value="<?php echo $row['nama_kategori'] ?>"><?php echo $row['nama_kategori'] ?>
+                                    <option value="<?php echo $row['id'] ?>" <?php if ($data['kategori']==$row['id']){echo "selected";} ?>><?php echo $row['nama_kategori'] ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>

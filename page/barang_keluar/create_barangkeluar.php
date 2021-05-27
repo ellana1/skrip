@@ -25,7 +25,7 @@
                             
                                 <div class="col-md-12 col-xs-12 form-group">
                                     <label>Penerima</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Nama barang" name="penerima" required>
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Masukan Nama penerima" name="penerima" required>
                             </div>
                             
                             
