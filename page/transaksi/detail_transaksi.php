@@ -1,3 +1,29 @@
+<?php
+if (isset($_POST['simpan'])) {
+    // print_r($_POST);exit;
+        $bahan = mysqli_query($conn, "SELECT * FROM bahan WHERE id = '".$_POST['id']."'");
+        // $barang = mysqli_query($conn, "SELECT * FROM barang WHERE barang_id = '".$_POST['id']."'");
+        $row    = mysqli_fetch_array($bahan);
+        $total  = $row['harga'] * $_POST['qty'];
+        $query = mysqli_query($conn, "INSERT INTO detail_transaksi (transaksi_id, id, qty)
+            VALUES ('".$_POST['transaksi_id']."', '".$_POST['id']."', '".$_POST['qty']."')");
+        
+                        $sql = "UPDATE transaksi set 
+                        total =  '$total'
+                        WHERE id = '".$_GET['id']."'
+                        ";
+                        $query = mysqli_query($conn, $sql);
+                            echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=transaksi&aksi=detail&id=".$_POST['transaksi_id']."'</script>";
+                        
+                    }
+if (isset($_GET['delete'])) {
+    $sql = "DELETE from detail_transaksi 
+                        WHERE id = '".$_GET['delete']."'
+                        ";
+                        $query = mysqli_query($conn, $sql);
+                        echo "<script>alert('Data terhapus!'); window.location.href='?halaman=transaksi&aksi=detail&id=".$_GET['id']."'</script>";
+}
+                    ?>
 <?php 
 
 $query  =   mysqli_query($conn, "SELECT * FROM transaksi WHERE id = '".$_GET['id']."'");
@@ -28,20 +54,15 @@ $kode   =   "TR".$kode;
                       </div>
                        <span class="float-right">
 
-                        <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#modal_detail"><i class="mdi mdi-plus"></i></a>
-                        <a href="page/transaksi/print.php?id=<?php echo $row['id']; ?>" class="btn btn-info" target="_blank"><i class="mdi mdi-printer"></i></a>
+                        <a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#modal_detail"><i class="fa fa-plus"></i></a>
+                        <a href="page/transaksi/print.php?id=<?php echo $row['id']; ?>" class="btn btn-info" target="_blank"><i class="fa fa-print"></i></a>
                     </span>
                 </div>
-                <!-- <?php if (isset($_SESSION['flash'])): ?>
-                    <div class="<?php echo $_SESSION['flash']['class'] ?>">
-                        <i class="<?php echo $_SESSION['flash']['icon'] ?>"></i>
-                        <?php echo "  ".$_SESSION['flash']['label'];
-                        ?>
-                    </div> -->
-                <?php endif ?> -->
+                
+               
                 <div class="card-body">
                     <div class="table-responsive p-t-10">
-                        <table id="example" class="table   " style="width:100%">
+                        <table id="example" class="table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Kode Barang</th>
@@ -52,12 +73,13 @@ $kode   =   "TR".$kode;
                                 </tr>
                             </thead>
                             <tbody>
+                               
                                 <?php
                                 $total = 0;
-                                $list_detail = mysqli_query($conn, "SELECT * FROM detail_transaksi WHERE transaksi_id = '".$row['id']."' ORDER BY id DESC");
+                                $list_detail = mysqli_query($conn, "SELECT * FROM detail_transaksi WHERE bahan = '".$row['id']."' ORDER BY id DESC");
                                 foreach($list_detail as $rowld){
-                                    $barang = mysqli_query($conn, "SELECT * FROM barang WHERE id = '".$rowld['barang_id']."'");
-                                    $rowbar = mysqli_fetch_array($barang);
+                                    $bahan = mysqli_query($conn, "SELECT * FROM bahan WHERE bahan_id = '".$rowld['id']."'");
+                                    $rowbar = mysqli_fetch_array($bahan);
                                     $subtotal = $rowbar['harga'] * $rowld['qty'];
                                     $total += $subtotal;
                                     ?>
@@ -67,8 +89,7 @@ $kode   =   "TR".$kode;
                                         <td><?php echo $rowld['qty']; ?></td>
                                         <td>Rp <?php echo number_format($subtotal,0,',','.'); ?></td>
                                         <td>
-                                             <a href="?halaman=transaksi&aksi=edit&id=<?= $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                            <a href="?halaman=transaksi&aksi=delete&id=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Apakah data akan dihapus?')"><i class="fa fa-trash"></i></a>
+                                            <a href="?halaman=transaksi&aksi=detail&delete=<?= $rowld['id'] ?>&id=<?= $_GET['id'] ?>" class="btn btn-danger" onclick="return confirm('Apakah data akan dihapus?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -98,27 +119,23 @@ $kode   =   "TR".$kode;
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form action="<?php echo $aksi; ?>?page=<?php echo $_GET['page'] ?>&aksi=tambah_detail" method="POST">
+            <form action="?halaman=transaksi&aksi=detail&id=<?php echo $row['id']; ?>" method="POST">
                 <input type="hidden" name="transaksi_id" value="<?php echo $row['id']; ?>">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Barang</label>
-                                <select name="barang_id" class="form-control" required>
-                                    <option selected disabled>--Pilih Barang--</option>
+                                <select name="id" class="form-control" required>
+                                    <option selected disabled>--Pilih Bahan--</option>
                                     <?php
-                                    $kat = mysqli_query($conn, "SELECT * FROM kategori ORDER BY id asc");
-                                    foreach($kat as $k){ ?>
-                                        <optgroup label="<?php echo $k['nama_kategori'] ?>">
-                                            <?php
-                                            $list_barang = mysqli_query($conn, "SELECT * FROM barang where kategori_id='".$k['id']."' ORDER BY nama_barang asc ");
-                                            foreach($list_barang as $lb){
-                                                echo '<option value="'.$lb['id'].'">'.$lb['nama_barang'].'  (Rp. '.number_format($lb['harga']).')</option>';
-                                            }
-                                            ?>
-                                        </optgroup>
-                                    <?php } ?>
+                                    $list_barang = mysqli_query($conn, "SELECT * FROM bahan where id not in (SELECT bahan_id FROM detail_transaksi WHERE detail_barang.barang_id = '".$row['id']."')");
+                                    foreach($list_barang as $lb){
+                                        echo '<option value="'.$lb['id'].'">'.$lb['nama_bahan'].'  (Rp. '.number_format($lb['harga']).')</option>';
+                                    }
+                                    ?>
+                                    
+                                    
                                 </select>
                             </div>
                         </div>
@@ -131,7 +148,7 @@ $kode   =   "TR".$kode;
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Tambah</button>
+                    <button type="submit" name="simpan" class="btn btn-success">Tambah</button>
                 </div>
             </form>
         </div>

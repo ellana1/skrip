@@ -15,45 +15,54 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Pelanggan</th>
+                                    <th>Kode Transaksi</th>
                                     <th>Tanggal</th>
-                                    <th>Harga</th>
                                     <th>Total</th>
-                                    <th>Aksi</th>
+                                    <th></th>
+                
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $no = 1;
-                                //while ($row = mysqli_fetch_assoc($query)):
+                                $no = 0;
                                 $query = mysqli_query($conn, "SELECT * FROM transaksi ORDER BY id DESC");
-                                $customer_id=mysqli_fetch_array(mysqli_query($conn,"SELECT * from customer where id = '$row[customer]'"));
                                 foreach($query as $row){
-                                    $customer_id=date_format(date_create($row['tanggal']),'ymd')*10000;
+                                $nama_customer=mysqli_fetch_array(mysqli_query($conn,"SELECT * from transaksi where id = '$row[nama_customer]'"));
+                                    $kode=date_format(date_create($row['tanggal']),'ymd')*10000;
+                                    $tanggal=date_format(date_create($row['tanggal']),'ymd')*10000;
                                     $no++;
-                                    $kode_barang=$row['id']+$kode_barang;
-                                    $kode_barang="TR".$kode_barang;
+                                    $kode=$row['id']+$kode;
+                                    $kode="TR".$kode;
                                     $sum=0;
-                                    $jml=mysqli_query($conn,"SELECT * from detail_transaksi join barang on detail_transaksi.barang_id=barang.id where detail_transaksi.transaksi_id='$row[id]'");
+                                    $sql="SELECT * from detail_transaksi join barang on detail_transaksi.barang_id=barang.barang_id where detail_transaksi.transaksi_id='$row[id]'";
+                                    $jml=mysqli_query($conn,$sql);
                                     foreach ($jml as $j) {
                                         $item=$j['qty']*$j['harga'];
                                         $sum += $item;
                                     }
                                     ?>
                                     <tr>
-                                        <td><?= $no ?></td>
-                                        <td><?= $row['customer_id'] ?></td>
-                                        <td><?= $row['nama_customer'] ?></td>
-                                        <td><?= $row['tanggal'] ?></td>
-                                        <td><?= $row['harga'] ?></td>
-                                        <td><?= $row['total'] ?></td>
+                                        <td><?php echo $no; ?></td>
+                                        <td>
+                                            <a class="text-primary" href="?halaman=transaksi&aksi=detail&id=<?php echo $row['id']; ?>">
+                                                #<?php echo $kode; ?>
+                                            </a>
+                                            <br>
+                                            <span class="text-primary"><?php echo @$nama_customer['nama_customer'] ?></span>
+                                            
+                                            <!-- <span class="text-muted"> - <?php echo @$nama_customer[''] ?></span> --> 
+                                        </td>
+                                        <td><?php echo $row['tanggal']; ?></td>
+                                        <td>Rp <?php echo number_format($sum,0,',','.'); ?></td>
                                        
                                         <td>
                                             <a href="?halaman=transaksi&aksi=edit&id=<?= $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                             <a href="?halaman=transaksi&aksi=delete&id=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Apakah data akan dihapus?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php $no++;
+                            }
+                                ?>
                             </tbody>
                         </table>
 
@@ -64,3 +73,4 @@
             <!-- /.container-fluid -->
 
         </div>
+    </div>

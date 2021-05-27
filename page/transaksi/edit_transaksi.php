@@ -21,12 +21,12 @@
                             
                                 <div class="col-md-12 col-xs-12 form-group">
                                     <label>Nama Pelanggan</label>
-                                <input type="date" class="form-control input-lg" id="exampleInputEmail1" placeholder="Masukan nama pelanggan" name="nama_customer" required>
+                                <input type="text" class="form-control input-lg" id="exampleInputEmail1" placeholder="Masukan nama pelanggan" name="nama_customer" required>
                             </div>
                             
                                 <div class="col-md-12 col-xs-12 form-group">
                                     <label>Tanggal</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="date" name="tanggal" required>
+                                <input type="date" class="form-control" id="exampleInputEmail1" placeholder="date" name="tanggal" required>
                             </div>
                             
                             
@@ -53,13 +53,12 @@
 
                     if (isset($_POST['simpan'])) {
                         $id = $_POST['id'];
-                        $customer_id = $_POST['customer_id'];
                         $nama_customer  = $_POST['nama_customer'];
                         $tanggal  = $_POST['tanggal'];
-                        $harga = $_POST['harga'];
+                
                         $total = $_POST['total'];
 
-                        $sql = "UPDATE transaksi set customer_id= '$customer_id', nama_customer='$nama_customer', tanggal='$tanggal', harga='$harga' total= '$total'                                                          where id='$id'";
+                        $update = mysqli_query($conn, "UPDATE transaksi SET total = total + '".$total."' WHERE id = '".$_POST['transaksi_id']."'");                                                         
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo "<script>alert('Data berhasil ditambahkan!'); window.location.href='?halaman=transaksi'</script>";

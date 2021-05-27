@@ -17,7 +17,7 @@
                                 <th>No</th>
                                 <th>Nama Perusahaan</th>
                                 <th>Alamat</th>
-                                <th>Produk</th>
+                                <th>Produksi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
