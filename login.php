@@ -72,28 +72,59 @@ include 'config/connection.php' ?>
                                     </form>
 
                                     <?php
-                                    if (isset($_POST['login'])) {
-                                        $username = $_POST['username'];
-                                        $password = $_POST['pass'];
+//                                     if (isset($_POST['login'])) {
+//                                         $username = $_POST['username'];
+//                                         $password = $_POST['pass'];
+                                        
+                                        if (isset($_POST['submit'])) {
+                                        $user = $_POST['username'];
+                                        $pass = $_POST['password'];
+
+//                                         $sql = "SELECT * from user where username='$user' and password='$password'";
+//                                         $query = mysqli_query($con, $sql);
+//                                         $data = mysqli_fetch_assoc($query);
+//                                         $row = mysqli_num_rows($query);
 
                                         $queryuser = mysqli_query($conn, "SELECT *FROM user WHERE username='$username' AND password='$password' AND level='admin'");
                                         $result1 = mysqli_fetch_assoc($queryuser);
 
                                         // var_dump($result1);
 
-                                        // var_dump($_SESSION);
-                                        if (!empty($result1)) {
-                                            $_SESSION["admin"] = $result1;
-                                            $_SESSION['user_id'] = $result1['id_user'];
-                                            $_SESSION['username'] = $result1['username'];
-                                            $_SESSION['password'] = $result1['password'];
-                                            $_SESSION['nama'] = $result1['nama'];
-                                            $_SESSION['level'] = 'admin';
-                                            $_SESSION['is_login'] = true;
-                                            header('location: index.php');
-                                        } else {
-                                            echo "Login Gagal";
-                                        }
+                                        
+                                     if (!empty($result1)) {
+                                        $_SESSION["admin"] = $result1;
+                                        $_SESSION['user_id'] = $result1['id_user'];
+                                        $_SESSION['username'] = $result1['username'];
+                                        $_SESSION['password'] = $result1['password'];
+                                        $_SESSION['nama'] = $result1['nama'];
+                                        $_SESSION['level'] = 'admin';
+                                        $_SESSION['is_login'] = true;
+                                        header('location: index.php');
+                                     if ($_SESSION['level']=='admin') {
+                        echo "<script>alert('Login berhasil!');window.location.href='admin/index.php'</script>";  
+                       }elseif ($_SESSION['level']=='pegawai') {
+                         $pelatih=mysqli_fetch_array(mysqli_query($con,"SELECT * from pelatih where id_pegawai='$user'"));
+
+                        $_SESSION['id_user']= $pegawai['id_pegawai'];
+                        $_SESSION['nama_pegawai']   = $pegawai['nama_pelatih'];
+                        $_SESSION['img']    = $pegawai['foto'];
+                        $_SESSION['alamat']    = $pegawai['alamat']; 
+                        $_SESSION['telp']    = $pegawai['telp'];
+                        echo "<script>alert('Login berhasil!');window.location.href='admin/index.php'</script>";  
+                        }else{
+                         $murid=mysqli_fetch_array(mysqli_query($con,"SELECT * from supplier where id='$user'"));
+
+                        $_SESSION['id_user']= $supplier['id'];
+                        $_SESSION['name']   = $supplier['nama_perusahaan'];
+                        $_SESSION['alamat']    = $supplier['alamat'];
+                        $_SESSION["num"]    = 0;
+      	                echo "<script>alert('Login berhasil!');window.location.href='index.php'</script>";  
+      }
+
+    }else{
+      	echo "<script>alert('Username atau Password salah!')</script>";  
+    }
+}
                                     } ?>
 
                                 </div>
