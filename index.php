@@ -3,7 +3,7 @@
 // error_reporting(0);
 include 'config/connection.php';
 (!empty($_SESSION)) ?  false : header('Location: login.php');
-
+// var_dump($_SESSION["level"]);
 if (isset($_GET['logout'])) {
     // mysqli_query($conn,"UPDATE user set last_activity = null where id_user='".$_SESSION["id_user"]."'");
     session_destroy();
@@ -25,6 +25,7 @@ if (isset($_GET['logout'])) {
     <title>CV BISMOP | Admin Page</title>
 
     <!-- Custom fonts for this template-->
+    <link href="assets/img/logo-bisma.png" rel="icon">
 
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -70,6 +71,8 @@ if (isset($_GET['logout'])) {
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <?php if($_SESSION['admin']) : ?>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-user"></i>
@@ -85,25 +88,23 @@ if (isset($_GET['logout'])) {
                     </div>
                 </div>
             </li>
+            <?php endif;?>
+            <!-- ini page untuk supplier dan admin -->
+            <?php if (($_SESSION['level']== 'supplier') || ($_SESSION['level'] =='admin')) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="?halaman=supplier">
+                    <i class="fas fa-fw fa-user" aria-hidden="true"></i>
+                    <span>Supplier</span></a>
+            </li>
+            <?php endif;?>
+            <!-- //ini page untuk pegawai dan admin -->
+            <?php if ( ($_SESSION['level'] == 'pegawai') || ($_SESSION['level'] =='admin') || ($_SESSION['level'] == 'supplier')) : ?>
             <li class="nav-item">
                 <a class="nav-link" href="?halaman=stok">
                     <i class="fa fa-cubes" aria-hidden="true"></i>
                     <span>Stok Barang</span></a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fa fa-cubes"></i>
-                    <span>Master Barang</span>
-                </a>
-                <div id="collapseOne" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Stok :</h6>
-                        <a class="collapse-item" href="?halaman=stok">Stok Barang</a>
-                        <a class="collapse-item" href="?halaman=data_barang">Data Barang</a>
-                         <a class="collapse-item" href="?halaman=pegawai&aksi=tambah">Tambah Data Pegawai</a> 
-    </div>
-    </div>
-    </li> 
+            
 
     <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -114,48 +115,44 @@ if (isset($_GET['logout'])) {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Kategori:</h6>
-                        <a class="collapse-item" href="?halaman=produk">Produk</a>
                         <a class="collapse-item" href="?halaman=kategori">Kategori Barang</a>
                         <a class="collapse-item" href="?halaman=bahan">Bahan baku</a>
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item ---->
-            <li class="nav-item">
-                <a class="nav-link" href="?halaman=stok">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    <span>Transaksi</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="404.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Metode</span></a>
-            </li>
-
-
-            <li class="nav-item">
+         <?php endif;?>
+            <!-- Nav Item - Tables barang masuk dan keluar -->
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="?halaman=barang_masuk">
                     <i class="fa fa-truck" aria-hidden="true"></i>
                     <span>Barang Masuk</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
+            </li> -->
+            
+            <!-- Nav Item - Tables-->
+            <?php if ( ($_SESSION['level'] == 'pegawai') || ($_SESSION['level'] =='admin')) : ?>
             <li class="nav-item">
                 <a class="nav-link" href="?halaman=barang_keluar">
                     <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
                     <span>Barang Keluar</span></a>
             </li>
-
-            <!-- Nav Item - Tables -->
+            <?php endif;?>
+            
+            <!-- Nav Item ---->
+            <?php if ($_SESSION['level']== 'admin'):  ?>
             <li class="nav-item">
-                <a class="nav-link" href="?halaman=supplier">
-                    <i class="fas fa-fw fa-user" aria-hidden="true"></i>
-                    <span>Supplier</span></a>
+                <a class="nav-link" href="?halaman=transaksi">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <span>Transaksi</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="404.php">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Metode</span></a>
+            </li> 
+            <?php endif; ?>
             <!-- Nav Item - Utilities Collapse Menu -->
+            <?php if ( ($_SESSION['level'] == 'pegawai') || ($_SESSION['level'] =='admin')) : ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa fa-print" aria-hidden="true"></i>
@@ -164,13 +161,14 @@ if (isset($_GET['logout'])) {
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Laporan:</h6>
-                        <a class="collapse-item" href="?halaman=laporan_input">Lap. Barang Masuk</a>
-                        <a class="collapse-item" href="?halaman=laporan_output">Lap. Barang Keluar</a>
-                        <a class="collapse-item" href="404.html">Lap. Transaksi Penjualan</a>
+                    
+                        <a class="collapse-item" href="?halaman=pelaporan_barangkeluar">Lap. Barang Keluar</a>
+                        <a class="collapse-item" href="?halaman=pelaporan_transaksi">Lap. Transaksi Penjualan</a>
 
                     </div>
                 </div>
             </li>
+        <?php endif;?>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -235,15 +233,15 @@ if (isset($_GET['logout'])) {
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Adminitrator</span>
-                                <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Elin Marliana</span>
+                                <img class="img-profile rounded-circle" src="assets/img/unsada.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Edit Profil
-                                </a>
+                                    Forgot Password?
+                                </a> 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -258,7 +256,7 @@ if (isset($_GET['logout'])) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php
-
+                    // case adalah alamat url
                     $page = @$_GET['halaman'];
                     $aksi = @$_GET['aksi'];
                     $page = strtolower($page);
@@ -274,7 +272,7 @@ if (isset($_GET['logout'])) {
                                 include 'page/user/index_user.php';
                             }
                             break;
-
+                        // ini halaman pegawai
                         case 'pegawai':
                             if ($aksi == "tambah") {
                                 include 'page/pegawai/create_pegawai.php';
@@ -299,17 +297,7 @@ if (isset($_GET['logout'])) {
                             }
                             break;
 
-                        case 'produk':
-                            if ($aksi == "tambah") {
-                                include 'page/produk/create_produk.php';
-                            } elseif ($aksi == "edit") {
-                                include 'page/produk/edit_produk.php';
-                            } elseif ($aksi == "delete") {
-                                include 'page/produk/delete_produk.php';
-                            } else {
-                                include 'page/produk/index_produk.php';
-                            }
-                            break;
+                       
 
                         case 'kategori':
                             if ($aksi == "tambah") {
@@ -335,17 +323,7 @@ if (isset($_GET['logout'])) {
                             }
                             break;
 
-                        case 'barang_masuk':
-                            if ($aksi == "tambah") {
-                                include 'page/barang_masuk/create_barangmasuk.php';
-                            } elseif ($aksi == "edit") {
-                                include 'page/barang_masuk/edit_barangmasuk.php';
-                            } elseif ($aksi == "delete") {
-                                include 'page/barang_masuk/delete_barangmasuk.php';
-                            } else {
-                                include 'page/barang_masuk/index_barangmasuk.php';
-                            }
-                            break;
+                       
                             case 'barang_keluar':
                             if ($aksi == "tambah") {
                                 include 'page/barang_keluar/create_barangkeluar.php';
@@ -359,18 +337,44 @@ if (isset($_GET['logout'])) {
                             break;
 
                             case 'transaksi':
-                            if ($aksi == "tambah") {
-                                include 'page/transaksi/create_transaksi.php';
-                            } elseif ($aksi == "edit") {
-                                include 'page/transaksi/edit_transaksi.php';
-                            } elseif ($aksi == "delete") {
-                                include 'page/transaksi/delete_transaksi.php';
-                            } else {
-                                include 'page/transaksi/index_transaksi.php';
-                            }
-                            break;
+                        if ($aksi == "tambah") {
+                            include 'page/transaksi/create_transaksi.php';
+                        } elseif ($aksi == "edit") {
+                            include 'page/transaksi/edit_transaksi.php';
+                        } elseif ($aksi == "delete") {
+                            include 'page/transaksi/delete_transaksi.php';
+                        } elseif ($aksi == "detail") {
+                            include 'page/transaksi/detail_transaksi.php';
+                        } else {
+                            include 'page/transaksi/index_transaksi.php';
+                        }
+                        break;
+
+                        case 'supplier':
+                        if ($aksi == "tambah") {
+                            include 'page/supplier/create_supplier.php';
+                        } elseif ($aksi == "edit") {
+                            include 'page/supplier/edit_supplier.php';
+                        } elseif ($aksi == "delete") {
+                            include 'page/supplier/delete_supplier.php';
+
+                        } else {
+                            include 'page/supplier/index_supplier.php';
+                        }
+                        break;
+
+                        // case 'pelaporan_barangmasuk':
+                        // include 'page/pelaporan/pelaporan_barangmasuk.php';
+                        // break;
+                        case 'pelaporan_barangkeluar':
+                        include 'page/pelaporan/pelaporan_barangkeluar.php';
+                        break;
+                        case 'pelaporan_transaksi':
+                        include 'page/pelaporan/pelaporan_transaksi.php';
+                        break;
+
                         default:
-                            include 'page/home/index_home.php';
+                        include 'page/home/index_home.php';
                     }
                     ?>
                 </div>
