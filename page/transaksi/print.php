@@ -1,10 +1,10 @@
 <?php
 include '../../config/connection.php';
-$query  =   mysqli_query($conn, "SELECT * FROM transaksi WHERE id_transaksi = '".$_GET['id']."'");
+$query  =   mysqli_query($conn, "SELECT * FROM transaksi WHERE id_transaksi = '" . $_GET['id'] . "'");
 $row    =   mysqli_fetch_array($query);
-$kode   =   date_format(date_create($row['tanggal']),'ymd')*10000;
-$kode   =   $row['id']+$kode;
-$kode   =   "TR".$kode;
+$kode   =   date_format(date_create($row['tanggal']), 'ymd') * 10000;
+$kode   =   $row['id_transaksi'] + $kode;
+$kode   =   "TR" . $kode;
 ?>
 <title>Invoice #<?php echo $kode ?></title>
 <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@ $kode   =   "TR".$kode;
         <div class="col-3">
             <div class="mt-3 pt-3">
                 <p><small>Cileungsi, <?php echo dateIndonesian(date('Y-m-d')) ?></small></p>
-                <p><small>Nama Customer<br><b><?php echo ucwords($row['nama_customer']) ?></b></small></p>
+                <p><small>Nama Customer :<br><b><?php echo ucwords($row['nama_customer']) ?></b></small></p>
             </div>
         </div>
         <div class="col-12">
@@ -41,69 +41,66 @@ $kode   =   "TR".$kode;
                         </div>
                         <div class="col-md-6">
                             <div class="form-group float-right">
-                              <label>Tanggal</label>
-                              <p><b><?php echo $row['tanggal']; ?></b></p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive p-t-10">
-                    <table id="example" class="table" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Nama Barang</th>
-                                <th>QTY</th>
-                                <th>Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $total = 0;
-                            $list_detail = mysqli_query($conn, "SELECT * FROM detail_transaksi WHERE transaksi_id = '".$row['id']."' ORDER BY id DESC");
-                            foreach($list_detail as $rowld){
-                                switch ($rowld['tipe']) {
-                                    case 'barang':
-                                    $query = mysqli_query($conn, "SELECT * FROM barang WHERE barang_id = '".$rowld['item_id']."'");
-                                    $rowbar    = mysqli_fetch_array($query);
-                                    $title=$rowbar['nama_barang'];
-                                    break;
-                                    case 'bahan':
-                                    $query = mysqli_query($conn, "SELECT * FROM bahan WHERE id = '".$rowld['item_id']."'");
-                                    $rowbar    = mysqli_fetch_array($query);
-                                    $title=$rowbar['nama_bahan'];
-                                    break;
-                                    // case 'stok':
-                                    // $query = mysqli_query($conn, "SELECT * FROM stok WHERE id = '".$rowld['item_id']."'");
-                                    // $rowbar    = mysqli_fetch_array($query);
-                                    // $title=$rowbar['nama_barang'];
-                                    // break;
-                                }
-                                $subtotal = $rowbar['harga'] * $rowld['qty'];
-                                $total += $subtotal;
-                                ?>
+                                <label>Tanggal</label>
+                                <p><b><?php echo $row['tanggal']; ?></b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive p-t-10">
+                        <table id="example" class="table" style="width:100%">
+                            <thead>
                                 <tr>
-                                    <td><?php echo $title; ?></td>
-                                    <td><?php echo $rowld['qty']; ?></td>
-                                    <td>Rp <?php echo number_format($subtotal,0,',','.'); ?></td>
-
+                                    <th>Nama Barang</th>
+                                    <th>QTY</th>
+                                    <th>Subtotal</th>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="2" align="right">Total : </td>
-                                <td><b>Rp <?php echo number_format($total,0,',','.'); ?></b></td>
-                                <?php 
-                                $update = mysqli_query($conn, "UPDATE transaksi SET total = '".$total."' WHERE id = '".$_GET['id']."'");
+                            </thead>
+                            <tbody>
+                                <?php
+                                $total = 0;
+                                $list_detail = mysqli_query($conn, "SELECT * FROM detail_transaksi WHERE id_transaksi = '" . $row['id_transaksi'] . "' ORDER BY id_detail DESC");
+                                foreach ($list_detail as $rowld) {
+                                    switch ($rowld['tipe']) {
+                                        case 'barang':
+                                            $query = mysqli_query($conn, "SELECT * FROM barang WHERE id_barang = '" . $rowld['item_id'] . "'");
+                                            $rowbar    = mysqli_fetch_array($query);
+                                            $title = $rowbar['nama_barang'];
+                                            break;
+                                        case 'bahan':
+                                            $query = mysqli_query($conn, "SELECT * FROM bahan WHERE id_bahan = '" . $rowld['item_id'] . "'");
+                                            $rowbar    = mysqli_fetch_array($query);
+                                            $title = $rowbar['nama_bahan'];
+                                            break;
+                                    }
+                                    $subtotal = $rowbar['harga'] * $rowld['qty'];
+                                    $total += $subtotal;
                                 ?>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                    <tr>
+                                        <td><?php echo $title; ?></td>
+                                        <td><?php echo $rowld['qty']; ?></td>
+                                        <td>Rp <?php echo number_format($subtotal, 0, ',', '.'); ?></td>
+
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" align="right">Total : </td>
+                                    <td><b>Rp <?php echo number_format($total, 0, ',', '.'); ?></b></td>
+                                    <?php
+                                    $update = mysqli_query($conn, "UPDATE transaksi SET total = '" . $total . "' WHERE id_transaksi = '" . $_GET['id'] . "'");
+                                    ?>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-<script type="text/javascript">window.print()</script>
+<script type="text/javascript">
+    window.print()
+</script>
