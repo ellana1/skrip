@@ -4,7 +4,7 @@ Daftar fitur :
 
 
 Transaksi Pembelian Percetakan dan laporan
-Peramalan Angka Penjualan Obat untuk Periode Berikutnya
+Peramalan Angka Penjualan Percetakan untuk Periode Berikutnya
 Metode Peramalan yang digunakan :
 
 Single Exponential Smoothing (alpha 0.2 )
