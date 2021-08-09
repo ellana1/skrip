@@ -1,5 +1,5 @@
-# skrip
- bismillah kelar skripsi 2021
+# skrip_em
+ bismillahirrahmanirrahim
 Daftar fitur :
 
 Transaksi Pembelian Percetakan dan laporan
@@ -12,7 +12,7 @@ Hasil Peramalan disini adalah ramalan angka penjualan barang percetakan untuk n 
 
 Cara install di localhost :
 Php 7.3 Xampp 7.3.2
-Import database "stokbismap" ke dalam database anda.
+Import database "bismop" ke dalam database anda.
 Ubah data untuk koneksi ke localhost anda dengan mengubah file "connection.php".
 Siap di akses melalui localhost.
 username / pasword : admin / admin.
