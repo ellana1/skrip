@@ -8,7 +8,7 @@ Metode Peramalan yang digunakan :
 
 - Single Exponential Smoothing (alpha 0.2 )
 - Regresi Linear Sederhana
-Hasil Peramalan disini adalah ramalan angka penjualan barang percetakan untuk n periode kedepan. Hasil Peramalan diperoleh dari perbandingan hasil perhitungan dari kedua metode dengan akurasi error MSE dan MAPE.
+-Hasil Peramalan disini adalah ramalan angka penjualan barang percetakan untuk n periode kedepan. Hasil Peramalan diperoleh dari perbandingan hasil perhitungan dari kedua metode dengan akurasi error MSE dan MAPE.
 
 
 Cara install di localhost :
