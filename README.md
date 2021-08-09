@@ -1,5 +1,5 @@
 # skrip_em
- bismillahirrahmanirrahim
+
 Daftar fitur :
 
 Transaksi Pembelian Percetakan dan laporan
